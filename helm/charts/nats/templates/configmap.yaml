@@ -44,8 +44,8 @@ data:
 
       {{- if .Values.nats.jetstream.fileStorage.enabled }}
       store_dir: {{ .Values.nats.jetstream.fileStorage.storageDirectory }}
-     
-      max_file: 
+
+      max_file:
       {{- if .Values.nats.jetstream.fileStorage.existingClaim }}
       {{- .Values.nats.jetstream.fileStorage.claimStorageSize  }}
       {{- else }}
@@ -53,6 +53,11 @@ data:
       {{- end }}
 
       {{- end }}
+    }
+    {{- end }}
+    {{- if .Values.mqtt.enabled }}
+    mqtt {
+      listen: 127.0.0.1:1883
     }
     {{- end }}
 
@@ -88,7 +93,7 @@ data:
       ]
       cluster_advertise: $CLUSTER_ADVERTISE
 
-      {{- with .Values.cluster.noAdvertise }}      
+      {{- with .Values.cluster.noAdvertise }}
       no_advertise: {{ . }}
       {{- end }}
 
@@ -101,7 +106,7 @@ data:
     {{- end }}
 
     {{- if or .Values.leafnodes.enabled .Values.leafnodes.remotes }}
-    ################# 
+    #################
     #               #
     # NATS Leafnode #
     #               #
@@ -115,7 +120,7 @@ data:
       include "advertise/gateway_advertise.conf"
       {{ end }}
 
-      {{- with .Values.leafnodes.noAdvertise }}      
+      {{- with .Values.leafnodes.noAdvertise }}
       no_advertise: {{ . }}
       {{- end }}
 
@@ -142,7 +147,7 @@ data:
     {{ end }}
 
     {{- if .Values.gateway.enabled }}
-    ################# 
+    #################
     #               #
     # NATS Gateways #
     #               #
